@@ -1,0 +1,47 @@
+// © RahzTheAnalyst
+
+//@version=4
+study(title="Rahz AssistiveTools", overlay=true)
+
+len1 = input(20,"EMA1")
+len2 = input(50,"EMA2")
+len3 = input(100,"EMA3")
+len4 = input(200,"EMA4")
+a = ema(close, 20)
+b = ema(close, 50)
+c = ema(close, 100)
+d = ema(close, 200)
+
+plot(a, color = color.yellow,title = "EMA1")
+plot(b, color = color.orange,title = "EMA2")
+plot(c, color = color.purple,title = "EMA3")
+plot(d, color = color.maroon,title = "EMA4")
+
+
+
+per=input(55, "Fibonacci area for X bars(Enter X)")
+hl=highest(high,per) //High Line (Border)
+ll=lowest(low,per)   //Low Line  (Border)
+dist=hl-ll          //range of the channel    
+hf=hl-dist*0.236    //Highest Fibonacci line
+cfh=hl-dist*0.382    //Center High Fibonacci line
+cfl=hl-dist*0.618    //Center Low Fibonacci line
+lf=hl-dist*0.764     //Lowest Fibonacci line
+fill(plot(hl,transp=100,editable=false), plot(hf,transp=100,editable=false),title="UP TREND ZONE", color = color.blue,transp=90) //up trend zone
+fill(plot(cfh,transp=100,editable=false), plot(cfl,transp=100,editable=false),title="MIDDLE TREND ZONE",title="UP TREND ZONE", color = color.gray,transp=90)   // ranging zone
+fill(plot(ll,transp=100,editable=false), plot(lf,transp=100,editable=false),title="DOWN TREND ZONE", color=color.red,transp=90)   //down trend zone
+
+
+
+
+src = hlc3
+mult = 3.0
+basis = vwma(src, per)
+dev = mult * stdev(src, per)
+
+upper_6= basis + (1*dev)
+lower_6= basis - (1*dev)
+
+plot(basis, color=color.fuchsia, linewidth=2,title="MIDDLE")
+plot(upper_6, color=color.red, linewidth=2, title="UP")
+plot(lower_6, color=color.green, linewidth=2, title="DOWN")
